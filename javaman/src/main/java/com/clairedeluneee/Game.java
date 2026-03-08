@@ -116,9 +116,12 @@ public class Game {
     public String getSelectedWord() { return this.selectedWord;}
     public void setSelectedWord(String word) { this.selectedWord = word;}
 
-    // Constructor
-    public Game() {
+    // Internal variable to hold the Scanner class.
+    private Scanner scanner;
 
+    // Constructor
+    public Game(Scanner s) {
+        this.scanner = s;
 
     }
 
@@ -133,14 +136,7 @@ public class Game {
         // Assure that the selected word is not null.
         if (this.selectedWord == null) return false;
 
-        // Iterates through each character of the selected word. Breaks and returns true if it is the case.
-        // Each iteration is lowecased along with the answer to ensure that cases won't matter.
-        for (int characterIndex = 0; characterIndex < this.selectedWord.length(); characterIndex++) {
-            if (this.selectedWord.toLowerCase().indexOf(characterIndex) == (guess + "").toLowerCase().charAt(0)) return true;
-        }
-
-        // If code keeps going, this means that the character guessed is NOT part of the selected word.
-        return false;
+        return this.selectedWord.contains((guess + "").toLowerCase());
     } 
 
     /**
@@ -151,7 +147,7 @@ public class Game {
 
         String output = "";
 
-        try (Scanner scanner = new Scanner(System.in)) {
+        try {
             // Get the next line.
             output = scanner.nextLine();
         
@@ -159,7 +155,7 @@ public class Game {
             Canvas.print(e.getMessage());
         }
 
-        return output;
+        return output.toLowerCase();
     }
 
     /**
@@ -175,26 +171,28 @@ public class Game {
         for (char c : this.selectedWord.toCharArray()) wordState += c == ' ' ? " " : "_";
 
         while (true) {
-            // Check game state
-            if (guessesRemaining == 0 || unguessedCharactersLeft == 0) break;
+
 
             // Clear screen.
             Canvas.clear();
 
             // Print art.
-            Canvas.print(Game.ASCII_ART[guessesRemaining == 0 ? 0 : guessesRemaining - 1]);
+            Canvas.print(Game.ASCII_ART[guessesRemaining == 0 ? 0 : 5-(guessesRemaining - 1)]);
 
             // Print current word status
             Canvas.print(this.wordState + "\n" + "guesses left: " + guessesRemaining);
 
-            // Ask user
+            // Check game state.
+            if (guessesRemaining == 0 || unguessedCharactersLeft == 0 || !wordState.contains("_")) break;
+            
+            // Ask user.
             Canvas.print("enter your guess below");
             String output = safeInput();
 
-            // Check for empty input
+            // Check for empty input.
             if (output.equals("")) continue;  
 
-            // Check for non-alphabetical characters by using their character code
+            // Check for non-alphabetical characters by using their character code.
             int charcode = (int) output.charAt(0);
 
             if (charcode < 65) continue;
@@ -202,26 +200,37 @@ public class Game {
             if (charcode > 90 && charcode < 97) continue;
             
             
-            // Coalese and check output
+            // Coalese and check output.
             boolean correct = this.checkGuess(output.charAt(0));
 
             if (correct) {
-                // Reset wordstate and unguessed characters
-                wordState = "";
+                // Reset wordstate and unguessed characters.
                 unguessedCharactersLeft = 0;
-                for (int characterIndex = 0; characterIndex < this.selectedWord.length(); characterIndex++) {
-                    if (this.selectedWord.toLowerCase().indexOf(characterIndex) == (output.charAt(0) + "").toLowerCase().charAt(0)) {
-                        wordState += output.charAt(0);
+                
+                // Refresh wordstate.
+                // Iterate through selected word characters.
+                for (int index = 0; index < selectedWord.length(); index++) {
+
+                    // Check if current character matches guess.
+                    if (selectedWord.charAt(index) == output.charAt(0)) {
+                        // Add guess to wordstate.
+                        // 
+                        // selectedWord = cobol
+                        // output = c;
+                        // output.charAt(0) = c;
+                        //
+                        // Prints as
+                        // c____
+                        StringBuilder sb = new StringBuilder(wordState);
+                        sb.setCharAt(index, output.charAt(0));
+                        wordState = sb.toString();
                     } else {
-                        if (this.selectedWord.toLowerCase().indexOf(characterIndex) == ' ') {
-                            wordState += " ";
-                        } else {
-                            wordState += "_";
-                            unguessedCharactersLeft++;
-                        }
+                        unguessedCharactersLeft++;
                     }
-                }                
+
+                }
             } else {
+                // Deduct guesses.
                 this.guessesRemaining--;
             }
         }  
