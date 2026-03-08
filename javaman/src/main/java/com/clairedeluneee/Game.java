@@ -111,10 +111,16 @@ public class Game {
     private String wordState;
 
     // Internal variable to keep track of how many letters remain to be guessed.
-    private int unguessedCharactersLeft = 0;
+    private int unguessedCharactersLeft = -1;
 
     public String getSelectedWord() { return this.selectedWord;}
     public void setSelectedWord(String word) { this.selectedWord = word;}
+
+    // Constructor
+    public Game() {
+
+
+    }
 
     // Methods
     /**
@@ -148,12 +154,9 @@ public class Game {
         try (Scanner scanner = new Scanner(System.in)) {
             // Get the next line.
             output = scanner.nextLine();
-
-            // Close the scanner. Should prevent memory leaks.
-            scanner.close(); 
         
         } catch (Exception e) {
-            
+            Canvas.print(e.getMessage());
         }
 
         return output;
