@@ -12,6 +12,7 @@ public class Game {
     // Variables + Mutators / Accessor methods
     // -------------------------------------------
 
+    // TODO: allow for file picking support
     /**
      * Selection of words that may be picked.
      */
@@ -134,9 +135,9 @@ public class Game {
     public boolean checkGuess(char guess) {
 
         // Assure that the selected word is not null.
-        if (this.selectedWord == null) return false;
+        if (this.getSelectedWord() == null) return false;
 
-        return this.selectedWord.contains((guess + "").toLowerCase());
+        return this.getSelectedWord().contains((guess + "").toLowerCase());
     } 
 
     /**
@@ -159,16 +160,25 @@ public class Game {
     }
 
     /**
-     * Game loop.
+     * Sets up the word bank. Useful if you so choose to use a predesignated word.
      */
-    public void start() {
+    public void setup() {
         // Pull word from word bank
         Random r = new Random();
-        this.selectedWord = Game.WORD_BANK[r.nextInt(Game.WORD_BANK.length-1)];
+        this.setSelectedWord(Game.WORD_BANK[r.nextInt(Game.WORD_BANK.length-1)]);
 
         // Set wordstate and replace all non-whitespace characters with underscores
         wordState = "";
-        for (char c : this.selectedWord.toCharArray()) wordState += c == ' ' ? " " : "_";
+        for (char c : this.getSelectedWord().toCharArray()) wordState += c == ' ' ? " " : "_";
+    }
+
+    /**
+     * Game loop.
+     */
+    public void start() {
+
+        // Sets up selected word.
+        if (this.selectedWord == null) this.setup();
 
         while (true) {
 
@@ -209,7 +219,7 @@ public class Game {
                 
                 // Refresh wordstate.
                 // Iterate through selected word characters.
-                for (int index = 0; index < selectedWord.length(); index++) {
+                for (int index = 0; index < this.getSelectedWord().length(); index++) {
 
                     // Check if current character matches guess.
                     if (selectedWord.charAt(index) == output.charAt(0)) {
