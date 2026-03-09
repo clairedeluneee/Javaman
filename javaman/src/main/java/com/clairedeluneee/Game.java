@@ -160,13 +160,15 @@ public class Game {
     }
 
     /**
-     * Sets up the word bank. Useful if you so choose to use a predesignated word.
+     * Sets up the wordstate for the game. Also randomizes what word is selected.
+     * @param pullFromWordBank
      */
-    public void setup() {
-        // Pull word from word bank
-        Random r = new Random();
-        this.setSelectedWord(Game.WORD_BANK[r.nextInt(Game.WORD_BANK.length-1)]);
-
+    public void setup(boolean pullFromWordBank) {
+        // Pull word from word bank if is specified
+        if (pullFromWordBank) {
+            Random r = new Random();
+            this.setSelectedWord(Game.WORD_BANK[r.nextInt(Game.WORD_BANK.length-1)]);
+        }
         // Set wordstate and replace all non-whitespace characters with underscores
         wordState = "";
         for (char c : this.getSelectedWord().toCharArray()) wordState += c == ' ' ? " " : "_";
@@ -178,7 +180,7 @@ public class Game {
     public void start() {
 
         // Sets up selected word.
-        if (this.selectedWord == null) this.setup();
+        this.setup(this.selectedWord == null);
 
         while (true) {
 
