@@ -35,7 +35,15 @@ public class Game {
         "universe", "planet", "future", "random", "folder", "programming",
 
         "start", "stage", "reset", "guide", "focus", "block", "dodge", "build", "guard", "track",
-        "moves", "teams", "troll", "climb", "shoot"
+        "moves", "teams", "troll", "climb", "shoot",
+
+        "apple", "bread", "chair", "dream", "eagle", "flame", "grass", "house", "juice", "knife", 
+        "lemon", "magic", "night", "ocean", "plant"
+
+        "river", "stone", "bread", "light", "cloud", "train", "sweet", "brush", "paint", "tiger",
+        "glass"
+
+        
     };
 
     /**
