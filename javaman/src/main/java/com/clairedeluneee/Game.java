@@ -27,6 +27,9 @@ public class Game {
         "exception", "compiler", "interpreter", "method", "variable", "class", "process", "entry point",
         "memory", "programming",
 
+        // Own picks
+        "meow", "speed", "stamina", "tetris",
+
         // Group picks
         "banana", "ironman", "spiderman", "superhero", "thanos", "godzilla", "system",
         "universe", "planet", "future", "random", "folder", "programming",
