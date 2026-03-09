@@ -20,7 +20,7 @@ public class Game {
         // Coding languages that are at least 4 letters long
         "javascript", "typescript", "python", "cobol", "scratch", "csharp", "java", "actionscript",
 
-        // Filiino slang
+        // Filipino slang
         "ngani", "penge", "omsim", 
     
         // Programming terms
@@ -114,15 +114,29 @@ public class Game {
     // Internal variable to keep track of how many letters remain to be guessed.
     private int unguessedCharactersLeft = -1;
 
-    public String getSelectedWord() { return this.selectedWord;}
+    /**
+     * Gets the selected word.
+     * @return the selected word, or an empty string if there is currently none.
+     */
+    public String getSelectedWord() { return this.selectedWord == null ? "" : this.selectedWord;}
+
+    /**
+     * Sets the selected word.
+     * @param word
+     */
     public void setSelectedWord(String word) { this.selectedWord = word;}
 
     // Internal variable to hold the Scanner class.
     private Scanner scanner;
 
-    // Constructor
+    // Constructors
     public Game(Scanner s) {
         this.scanner = s;
+
+    }
+
+    public Game() {
+        this.scanner = new java.util.Scanner(System.in);
 
     }
 
@@ -182,8 +196,8 @@ public class Game {
         // Sets up selected word.
         this.setup(this.selectedWord == null);
 
+        // Primary game loop.
         while (true) {
-
 
             // Clear screen.
             Canvas.clear();
@@ -247,6 +261,8 @@ public class Game {
             }
         }  
 
+        // Check if the player ran out of guesses. By this point, the while loop is
+        // now broken. If they did, they lose. Otherwise, they win.
         if (guessesRemaining == 0) {
             Canvas.print("gg go next");
         } else {
