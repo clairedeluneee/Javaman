@@ -24,7 +24,12 @@ public class Game {
         "ngani", "penge", "omsim", 
     
         // Programming terms
-        "exception", "compiler", "interpreter", "method", "variable", "class", "process", "entry point"
+        "exception", "compiler", "interpreter", "method", "variable", "class", "process", "entry point",
+        "memory", "programming",
+
+        // Group picks
+        "banana", "ironman", "spiderman", "superhero", "thanos", "godzilla", "system",
+        "universe", "planet", "future", "random", "folder", "programming"
     };
 
     /**
