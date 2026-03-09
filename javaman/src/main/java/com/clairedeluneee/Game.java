@@ -29,7 +29,10 @@ public class Game {
 
         // Group picks
         "banana", "ironman", "spiderman", "superhero", "thanos", "godzilla", "system",
-        "universe", "planet", "future", "random", "folder", "programming"
+        "universe", "planet", "future", "random", "folder", "programming",
+
+        "start", "stage", "reset", "guide", "focus", "block", "dodge", "build", "guard", "track",
+        "moves", "teams", "troll", "climb", "shoot"
     };
 
     /**
